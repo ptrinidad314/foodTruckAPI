@@ -62,6 +62,14 @@ namespace foodTruckAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            else 
+            {
+                app.UseExceptionHandler(async context =>
+                {
+                    context.Response.StatusCode = 500;
+                    await context.Response.WriteAsync("An unexpected fault happened.  Try again later.");
+                });
+            }
 
             app.UseHttpsRedirection();
 

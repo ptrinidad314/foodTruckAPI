@@ -21,7 +21,7 @@ namespace foodTruckAPI.Controllers
         }
 
         // GET api/<OrderController>/5
-        [HttpGet("{orderid}")]
+        [HttpGet("{orderid}", Name = "GetOrder")]
         public string Get(long orderid)
         {
             return "value";
@@ -34,9 +34,13 @@ namespace foodTruckAPI.Controllers
             if (orderDTO == null)
                 return BadRequest();
 
-            
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-            return Ok();
+            var orderResultDTO = _OrderRepository.CreateOrder(orderDTO);
+
+
+            return CreatedAtRoute("GetOrder", new { orderId:orderResultDTO.orderId }, orderResultDTO);
         }
 
         // PUT api/<OrderController>/5

@@ -30,6 +30,15 @@ namespace foodTruckAPI.Data.Models
         public virtual DbSet<FilmCategory> FilmCategory { get; set; }
         public virtual DbSet<FilmList> FilmList { get; set; }
         public virtual DbSet<FilmText> FilmText { get; set; }
+        public virtual DbSet<Ftaddress> Ftaddress { get; set; }
+        public virtual DbSet<Ftcreditcard> Ftcreditcard { get; set; }
+        public virtual DbSet<Ftcustomer> Ftcustomer { get; set; }
+        public virtual DbSet<Ftpayment> Ftpayment { get; set; }
+        public virtual DbSet<Ftpaymentcreditcard> Ftpaymentcreditcard { get; set; }
+        public virtual DbSet<Ftpaymentpaypal> Ftpaymentpaypal { get; set; }
+        public virtual DbSet<Ftpaymenttype> Ftpaymenttype { get; set; }
+        public virtual DbSet<Ftpaypal> Ftpaypal { get; set; }
+        public virtual DbSet<Ftstate> Ftstate { get; set; }
         public virtual DbSet<Image> Image { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<Language> Language { get; set; }
@@ -549,6 +558,170 @@ namespace foodTruckAPI.Data.Models
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnName("title")
+                    .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<Ftaddress>(entity =>
+            {
+                entity.ToTable("ftaddress");
+
+                entity.Property(e => e.Ftaddressid).HasColumnName("ftaddressid");
+
+                entity.Property(e => e.City)
+                    .IsRequired()
+                    .HasColumnName("city")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Line1)
+                    .IsRequired()
+                    .HasColumnName("line1")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Line2)
+                    .HasColumnName("line2")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Stateid).HasColumnName("stateid");
+
+                entity.Property(e => e.Unitnumber)
+                    .HasColumnName("unitnumber")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Zipcode)
+                    .IsRequired()
+                    .HasColumnName("zipcode")
+                    .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<Ftcreditcard>(entity =>
+            {
+                entity.ToTable("ftcreditcard");
+
+                entity.Property(e => e.Ftcreditcardid).HasColumnName("ftcreditcardid");
+
+                entity.Property(e => e.Cardnumber)
+                    .IsRequired()
+                    .HasColumnName("cardnumber")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.CvvCode)
+                    .IsRequired()
+                    .HasColumnName("cvvCode")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Ftcreditcardtypeid).HasColumnName("ftcreditcardtypeid");
+
+                entity.Property(e => e.Zipcode)
+                    .IsRequired()
+                    .HasColumnName("zipcode")
+                    .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<Ftcustomer>(entity =>
+            {
+                entity.ToTable("ftcustomer");
+
+                entity.Property(e => e.Ftcustomerid).HasColumnName("ftcustomerid");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnName("email")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Firstname)
+                    .IsRequired()
+                    .HasColumnName("firstname")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Ftaddressidbilling).HasColumnName("ftaddressidbilling");
+
+                entity.Property(e => e.Ftaddressidshipping).HasColumnName("ftaddressidshipping");
+
+                entity.Property(e => e.Lastname)
+                    .IsRequired()
+                    .HasColumnName("lastname")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Phone).HasColumnName("phone");
+            });
+
+            modelBuilder.Entity<Ftpayment>(entity =>
+            {
+                entity.ToTable("ftpayment");
+
+                entity.Property(e => e.Ftpaymentid).HasColumnName("ftpaymentid");
+
+                entity.Property(e => e.Ftcustomerid).HasColumnName("ftcustomerid");
+
+                entity.Property(e => e.Ftpaymentamount)
+                    .HasColumnName("ftpaymentamount")
+                    .HasColumnType("decimal(10,0)");
+
+                entity.Property(e => e.Ftpaymentcomplete).HasColumnName("ftpaymentcomplete");
+
+                entity.Property(e => e.Ftpaymenttypeid).HasColumnName("ftpaymenttypeid");
+            });
+
+            modelBuilder.Entity<Ftpaymentcreditcard>(entity =>
+            {
+                entity.ToTable("ftpaymentcreditcard");
+
+                entity.Property(e => e.Ftpaymentcreditcardid).HasColumnName("ftpaymentcreditcardid");
+
+                entity.Property(e => e.Ftcreditcardid).HasColumnName("ftcreditcardid");
+
+                entity.Property(e => e.Ftpaymentid).HasColumnName("ftpaymentid");
+            });
+
+            modelBuilder.Entity<Ftpaymentpaypal>(entity =>
+            {
+                entity.ToTable("ftpaymentpaypal");
+
+                entity.Property(e => e.Ftpaymentpaypalid).HasColumnName("ftpaymentpaypalid");
+
+                entity.Property(e => e.Ftpaymentid).HasColumnName("ftpaymentid");
+
+                entity.Property(e => e.Ftpaypalid).HasColumnName("ftpaypalid");
+            });
+
+            modelBuilder.Entity<Ftpaymenttype>(entity =>
+            {
+                entity.ToTable("ftpaymenttype");
+
+                entity.Property(e => e.Ftpaymenttypeid).HasColumnName("ftpaymenttypeid");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<Ftpaypal>(entity =>
+            {
+                entity.ToTable("ftpaypal");
+
+                entity.Property(e => e.Ftpaypalid).HasColumnName("ftpaypalid");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnName("email")
+                    .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<Ftstate>(entity =>
+            {
+                entity.ToTable("ftstate");
+
+                entity.Property(e => e.Ftstateid).HasColumnName("ftstateid");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Postalcode)
+                    .IsRequired()
+                    .HasColumnName("postalcode")
                     .HasMaxLength(255);
             });
 
