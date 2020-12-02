@@ -13,6 +13,12 @@ namespace foodTruckAPI.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+
+        public OrderController()
+        {
+
+        }
+
         // GET: api/<OrderController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -37,10 +43,13 @@ namespace foodTruckAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
+            return null;
+
+            /*
             var orderResultDTO = _OrderRepository.CreateOrder(orderDTO);
 
 
-            return CreatedAtRoute("GetOrder", new { orderId:orderResultDTO.orderId }, orderResultDTO);
+            return CreatedAtRoute("GetOrder", new { orderId:orderResultDTO.orderId }, orderResultDTO);*/
         }
 
         // PUT api/<OrderController>/5

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -64,10 +65,14 @@ namespace foodTruckAPI
             }
             else 
             {
-                app.UseExceptionHandler(async context =>
+                app.UseExceptionHandler(appBuilder => 
                 {
-                    context.Response.StatusCode = 500;
-                    await context.Response.WriteAsync("An unexpected fault happened.  Try again later.");
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An unexpected fault happened.  Try again later.");
+                    });
+
                 });
             }
 
