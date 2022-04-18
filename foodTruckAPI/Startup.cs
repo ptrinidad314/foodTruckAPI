@@ -52,7 +52,9 @@ namespace foodTruckAPI
 
             services.AddControllers();
 
-            services.AddSingleton<IMenuRepository, MenuRepository>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
         }
 

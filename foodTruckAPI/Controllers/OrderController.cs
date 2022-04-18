@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using foodTruckAPI.Model;
+using foodTruckAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,20 +14,24 @@ namespace foodTruckAPI.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        IOrderRepository _orderRepository;
 
-        public OrderController()
+        public OrderController(IOrderRepository orderRepository)
         {
-
+            _orderRepository = orderRepository;
         }
 
         // GET: api/<OrderController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return null;
+
+            //return new string[] { "value1", "value2" };
         }
 
         // GET api/<OrderController>/5
+        // [HttpGet("{menuid}", Name ="GetMenu")]
         [HttpGet("{orderid}", Name = "GetOrder")]
         public string Get(long orderid)
         {
@@ -43,13 +48,9 @@ namespace foodTruckAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            return null;
-
-            /*
-            var orderResultDTO = _OrderRepository.CreateOrder(orderDTO);
-
-
-            return CreatedAtRoute("GetOrder", new { orderId:orderResultDTO.orderId }, orderResultDTO);*/
+            var createOrderResultDTO = _orderRepository.CreateOrder(orderDTO);
+            
+            return CreatedAtRoute("GetOrder", new { orderid = createOrderResultDTO.orderId }, createOrderResultDTO);
         }
 
         // PUT api/<OrderController>/5
